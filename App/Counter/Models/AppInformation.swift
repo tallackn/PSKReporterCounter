@@ -28,6 +28,8 @@ struct AppInformation {
     static let name = "PSK Reporter Counter"
     static let author = "Nathan Tallack (ZL2NU)"
     static let copyright = "Copyright © 2026 Nathan Tallack (ZL2NU)"
+    static let privacyPolicy = URL(string: "https://github.com/tallackn/PSKReporterCounter/blob/main/PRIVACY.md")!
+    static let support = URL(string: "https://github.com/tallackn/PSKReporterCounter/blob/main/SUPPORT.md")!
 
     let version: String
     let sourceRepository: URL?

@@ -39,6 +39,8 @@ struct HelpGuideView: View {
             HStack {
                 Text("PSK Reporter Counter Help").font(.caption).foregroundStyle(.secondary)
                 Spacer()
+                Link("Privacy policy", destination: AppInformation.privacyPolicy)
+                Link("Support", destination: AppInformation.support)
                 Button("Open Settings…", action: openSettings)
             }.padding(14)
         }

@@ -1,0 +1,5 @@
+Version 2.0 establishes the first public release baseline from the accepted build 14.
+
+The menu bar counter, live rolling graphs, station filtering and corrected menu and popover behaviour are retained. About and Help now include public privacy and support links.
+
+Confirm that saved settings remain present and monitoring starts normally. In About, confirm Version 2.0 (15), and check the Privacy and Support links. The public source for this build is published to tallackn/PSKReporterCounter before upload.

@@ -1,6 +1,6 @@
 # PSK Reporter Counter
 
-A native macOS menu bar app written in Swift, using AppKit, SwiftUI, Swift Charts and CocoaMQTT. Version 1.2.1 targets Apple silicon and macOS 13 or later.
+A native macOS menu bar app written in Swift, using AppKit, SwiftUI, Swift Charts and CocoaMQTT. Version 2.0 targets Apple silicon and macOS 13 or later.
 
 ## Build and install locally
 
@@ -43,7 +43,7 @@ The original app source and documentation are released under the [MIT License](L
 
 App Sandbox allows outgoing network connections for the live feed. Preferences use the app container, and the app requests no user document access. Reception data stays in memory and expires with the selected window. No account or API key is required.
 
-The privacy manifest declares UserDefaults access for the app's own preferences. CocoaMQTT retains its separate bundled manifest.
+The privacy manifest declares UserDefaults access for the app's own preferences. CocoaMQTT retains its separate bundled manifest. Read the [privacy policy](PRIVACY.md) for what is sent to the independent feed provider and see [Support](SUPPORT.md) for help.
 
 ## Sliding window
 

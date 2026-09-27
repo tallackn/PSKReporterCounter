@@ -32,6 +32,8 @@ struct AboutView: View {
             HStack {
                 Text(AppInformation.copyright).font(.caption).foregroundStyle(.secondary)
                 Spacer()
+                Link("Privacy", destination: AppInformation.privacyPolicy)
+                Link("Support", destination: AppInformation.support)
                 Button("Help", action: openHelp)
             }
         }

@@ -96,7 +96,7 @@ enum HelpTopic: String, CaseIterable, Identifiable {
             ]
         case .privacy:
             [
-                HelpSection(title: "What connects to the network", body: "The app makes one encrypted connection to the PSK Reporter MQTT feed and subscribes to the selected transmitting callsign, band and mode. Those subscription choices are sent to the feed provider. It does not request the global stream or poll the PSK Reporter database."),
+                HelpSection(title: "What connects to the network", body: "The app makes one encrypted connection to the PSK Reporter MQTT feed and subscribes to the selected transmitting callsign, band and mode. Those subscription choices, your IP address and a random connection identifier are available to the feed provider. Its public documentation does not specify retention of connection details. Use the Privacy policy link below for more information. It does not request the global stream or poll the PSK Reporter database."),
                 HelpSection(title: "What is stored", body: "The callsign and preferences are saved on your Mac. Reception reports remain in memory and expire with the window. Restarting the app starts with an empty history. The app does not upload your reception history or include an analytics service. Basic lifecycle and error events can appear in macOS diagnostic logs."),
                 HelpSection(title: "Accounts and external links", body: "No account or API key is needed. Help and licence text are available offline. Opening the PSK Reporter or project links uses your browser and the destination site's own terms.")
             ]
