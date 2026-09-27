@@ -5,6 +5,16 @@
 	};
 	"objectVersion" = "56";
 	"objects" = {
+		"BFC1C9228D5B417691D0CC12" = {
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"path" = "App/Counter/Support/GraphPopoverDismissal.swift";
+			"sourceTree" = "<group>";
+		};
+		"BFC1C9228D5B417691D0CC13" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "BFC1C9228D5B417691D0CC12";
+		};
 		"BFC1C9228D5B417691D0CC10" = {
 			"isa" = "PBXFileReference";
 			"lastKnownFileType" = "sourcecode.swift";
@@ -322,6 +332,7 @@
 			"isa" = "PBXGroup";
 			"children" = (
 				"BFC1C9228D5B417691D0CC10",
+				"BFC1C9228D5B417691D0CC12",
 				"06FD82ABE0CD189C3C7B654C",
 				"36C0000DCD73C911C3EFF710",
 				"68808EF9B2BDF6771AA17B6E",
@@ -361,6 +372,7 @@
 			"buildActionMask" = "2147483647";
 			"files" = (
 				"BFC1C9228D5B417691D0CC11",
+				"BFC1C9228D5B417691D0CC13",
 				"24C6D0BBF0E002CBA929309D",
 				"19ECE08BACDDA7B2E22CD4BF",
 				"89705FF10C568FA2FE666B9E",

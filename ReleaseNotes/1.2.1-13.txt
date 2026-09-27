@@ -1,0 +1,7 @@
+Build 1.2.1 (13) raises the graph pane closer to the menu bar, corrects the right-click menu opening position and makes a second left-click close the graphs.
+
+Left-click the counter to open the graphs. The pane should sit just below the menu bar and remain fixed as the count updates. Left-click the counter again: the pane should close and stay closed. Reopen it, then check dismissal with Escape and a click outside the pane.
+
+Right-click the counter, both with the graphs closed and with them open. The command menu should appear below the counter immediately and remain in place. Control-click should open the same menu.
+
+The GitHub README now covers local building, installation and use. Maintainer release instructions remain in the separate release guide.

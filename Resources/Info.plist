@@ -8,7 +8,7 @@
     <key>CFBundleIdentifier</key><string>com.tallackn.PSKReporterCounter</string>
     <key>CFBundlePackageType</key><string>APPL</string>
     <key>CFBundleShortVersionString</key><string>1.2.1</string>
-    <key>CFBundleVersion</key><string>12</string>
+    <key>CFBundleVersion</key><string>13</string>
     <key>LSApplicationCategoryType</key><string>public.app-category.utilities</string>
     <key>NSHumanReadableCopyright</key><string>Copyright © 2026 Nathan Tallack (ZL2NU). MIT License.</string>
     <key>PSKSourceRepositoryURL</key><string>https://github.com/tallackn/PSKReporterCounter</string>

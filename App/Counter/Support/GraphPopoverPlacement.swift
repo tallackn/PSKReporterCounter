@@ -5,8 +5,16 @@ import CoreGraphics
 enum GraphPopoverPlacement {
     static func availableFrame(screen: CGRect, anchor: CGRect) -> CGRect {
         let top = min(screen.maxY, anchor.minY)
-        return CGRect(x: screen.minX, y: screen.minY, width: screen.width,
-                      height: max(0, top - screen.minY)).insetBy(dx: 8, dy: 8)
+        // Keep side and bottom clearance, but let the arrow meet the menu bar.
+        // Insetting the top as well leaves an unnecessary gap below the button.
+        return CGRect(x: screen.minX + 8, y: screen.minY + 8,
+                      width: max(0, screen.width - 16),
+                      height: max(0, top - screen.minY - 8))
+    }
+
+    static func menuOrigin(button: CGRect, visibleScreen: CGRect, rightToLeft: Bool) -> CGPoint {
+        CGPoint(x: rightToLeft ? button.maxX : button.minX,
+                y: min(button.minY, visibleScreen.maxY))
     }
 
     static func contentSize(in available: CGRect) -> CGSize {

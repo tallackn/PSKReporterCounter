@@ -14,6 +14,7 @@ final class StatusItemController: NSObject, NSPopoverDelegate {
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let menu = NSMenu()
     private let popover = NSPopover()
+    private let graphDismissal = GraphPopoverDismissal()
     private let logger = Logger(subsystem: "com.tallackn.PSKReporterCounter", category: "MenuBar")
     private var observation: AnyCancellable?
     private var displayedTitle: String?
@@ -28,7 +29,7 @@ final class StatusItemController: NSObject, NSPopoverDelegate {
         self.openHelp = openHelp
         super.init()
         menu.autoenablesItems = false
-        popover.behavior = .transient
+        popover.behavior = .applicationDefined
         popover.animates = false
         popover.delegate = self
         if let button = statusItem.button {
@@ -79,6 +80,7 @@ final class StatusItemController: NSObject, NSPopoverDelegate {
         containGraphsOnScreen()
         button.highlight(true)
         popover.contentViewController?.view.window?.makeKey()
+        graphDismissal.start(popover: popover, button: button)
         logger.info("Live graphs opened; visible=\(self.popover.isShown, privacy: .public)")
     }
 
@@ -97,14 +99,21 @@ final class StatusItemController: NSObject, NSPopoverDelegate {
     }
 
     @objc private func clicked() {
-        guard let button = statusItem.button else { return }
+        guard let button = statusItem.button, let window = button.window,
+              let screen = window.screen else { return }
         let event = NSApp.currentEvent
         if event?.type == .rightMouseUp || event?.modifierFlags.contains(.control) == true {
             closeGraphs()
             rebuildMenu()
+            menu.update()
+            let buttonFrame = window.convertToScreen(button.convert(button.bounds, to: nil))
+            let origin = GraphPopoverPlacement.menuOrigin(button: buttonFrame,
+                visibleScreen: screen.visibleFrame, rightToLeft: NSApp.userInterfaceLayoutDirection == .rightToLeft)
             button.highlight(true)
             logger.info("Context menu opened")
-            menu.popUp(positioning: nil, at: NSPoint(x: 0, y: button.bounds.minY), in: button)
+            // Supply screen coordinates once. The status button is flipped and
+            // can move as its image changes, so it is not a stable menu anchor.
+            menu.popUp(positioning: nil, at: origin, in: nil)
             button.highlight(false)
         } else if popover.isShown { closeGraphs() }
         else { showGraphs() }
@@ -116,6 +125,7 @@ final class StatusItemController: NSObject, NSPopoverDelegate {
     }
 
     private func releaseGraphPresentation() {
+        graphDismissal.stop()
         statusItem.button?.highlight(false)
         // Closed graphs do not observe the monitor or perform hidden redraws.
         popover.contentViewController = nil

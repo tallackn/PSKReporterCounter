@@ -19,6 +19,13 @@ enum PopoverPlacementCheck {
             for anchorX in [screen.minX + 10, screen.midX, screen.maxX - 30] {
                 let anchor = CGRect(x: anchorX, y: screen.maxY, width: 22, height: 25)
                 let available = GraphPopoverPlacement.availableFrame(screen: screen, anchor: anchor)
+                precondition(available.maxY == anchor.minY, "Top clearance must not lower the arrow")
+                for rightToLeft in [false, true] {
+                    let origin = GraphPopoverPlacement.menuOrigin(button: anchor, visibleScreen: screen,
+                                                                  rightToLeft: rightToLeft)
+                    precondition(origin.y == anchor.minY, "Menu must start below the status button")
+                    precondition(origin.x == (rightToLeft ? anchor.maxX : anchor.minX))
+                }
                 let content = GraphPopoverPlacement.contentSize(in: available)
                 precondition(content.width > 0 && content.height > 0)
                 precondition(content.width + 24 <= available.width)
@@ -33,7 +40,7 @@ enum PopoverPlacementCheck {
                                               width: size.width, height: size.height)
                         let placed = GraphPopoverPlacement.containedFrame(proposed, in: available)
                         precondition(screen.contains(placed), "Popover extends outside its display")
-                        precondition(placed.maxY < anchor.minY, "Popover covers or crosses the menu bar")
+                        precondition(placed.maxY <= anchor.minY, "Popover covers or crosses the menu bar")
                         precondition(placed.width > 0 && placed.height > 0)
                         precondition(GraphPopoverPlacement.containedFrame(placed, in: available) == placed,
                                      "Repeated live updates must not move an already contained window")

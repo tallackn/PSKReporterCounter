@@ -19,9 +19,10 @@ private struct RefreshingContent: View {
 }
 
 @MainActor
-private final class AnchorCheck: NSObject, NSApplicationDelegate {
+private final class AnchorCheck: NSObject, NSApplicationDelegate, NSPopoverDelegate {
     private let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let popover = NSPopover()
+    private let dismissal = GraphPopoverDismissal()
     private let samples = Samples()
     private var anchor: GraphPopoverAnchor?
     private var initialFrame = NSRect.zero
@@ -30,12 +31,23 @@ private final class AnchorCheck: NSObject, NSApplicationDelegate {
     private var buttonFrames = Set<String>()
     private let values = ["1", "8", "11", "88", "99", "100", "888", "9999", "10000", "0"]
     private var index = 0
+    private var openingGeometry: [String: String] = [:]
+    private let interactive = CommandLine.arguments.contains("--interactive")
+    private var opens = 0
+    private var closes = 0
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         item.button?.image = StatusCountImage.make("0")
+        item.button?.target = self
+        item.button?.action = #selector(clicked)
+        item.button?.sendAction(on: [.leftMouseUp, .rightMouseUp])
+        item.button?.setAccessibilityLabel("Graph interaction check")
+        popover.delegate = self
         // Wait for the status bar host to lay out this newly created item.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [self] in openPopover() }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 20) { [self] in
+        if !interactive {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [self] in openPopover() }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + (interactive ? 240 : 20)) { [self] in
             finish(error: "The native check did not finish within 20 seconds.")
         }
     }
@@ -60,22 +72,62 @@ private final class AnchorCheck: NSObject, NSApplicationDelegate {
         popover.contentViewController = hosting
         popover.contentSize = size
         popover.animates = false
-        popover.behavior = .transient
+        popover.behavior = .applicationDefined
         NSApp.activate(ignoringOtherApps: true)
         anchor = GraphPopoverAnchor(screenRect: rect)
+        openingGeometry["button"] = NSStringFromRect(rect)
+        openingGeometry["anchor"] = NSStringFromRect(anchor!.view.window!.frame)
+        openingGeometry["screen"] = NSStringFromRect(screen.visibleFrame)
+        openingGeometry["available"] = NSStringFromRect(available)
         popover.show(relativeTo: anchor!.view.bounds, of: anchor!.view, preferredEdge: .minY)
         guard let pane = hosting.view.window, popover.isShown else {
             finish(error: "The native popover did not open.")
             return
         }
         let contained = GraphPopoverPlacement.containedFrame(pane.frame, in: available)
+        openingGeometry["proposed"] = NSStringFromRect(pane.frame)
         if pane.frame != contained { pane.setFrame(contained, display: true) }
+        pane.makeKey()
+        dismissal.start(popover: popover, button: button)
+        opens += 1
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
+            guard popover.isShown else { return }
             initialFrame = pane.frame
             initialAnchor = anchor!.view.window!.frame
-            changeSample()
+            guard initialAnchor == rect, initialFrame.maxY == available.maxY else {
+                finish(error: "The anchor moved or the pane has unnecessary top clearance.")
+                return
+            }
+            if !interactive { changeSample() }
         }
     }
+
+    @objc private func clicked() {
+        if NSApp.currentEvent?.type == .rightMouseUp || NSApp.currentEvent?.modifierFlags.contains(.control) == true {
+            popover.close()
+            guard let button = item.button, let window = button.window, let screen = window.screen else { return }
+            let rect = window.convertToScreen(button.convert(button.bounds, to: nil))
+            let menu = NSMenu()
+            menu.addItem(withTitle: "Graph interaction check", action: nil, keyEquivalent: "")
+            let done = menu.addItem(withTitle: "Finish check", action: #selector(finishInteractive), keyEquivalent: "")
+            done.target = self
+            menu.update()
+            menu.popUp(positioning: nil,
+                at: GraphPopoverPlacement.menuOrigin(button: rect, visibleScreen: screen.visibleFrame,
+                    rightToLeft: NSApp.userInterfaceLayoutDirection == .rightToLeft), in: nil)
+        } else if popover.isShown { popover.close() }
+        else { openPopover() }
+    }
+
+    func popoverDidClose(_ notification: Notification) {
+        closes += 1
+        dismissal.stop()
+        anchor?.close()
+        anchor = nil
+        popover.contentViewController = nil
+    }
+
+    @objc private func finishInteractive() { finish(error: nil) }
 
     private func changeSample() {
         let value = values[index % values.count]
@@ -103,6 +155,8 @@ private final class AnchorCheck: NSObject, NSApplicationDelegate {
 
     private func finish(error: String?) {
         let result: [String: Any] = ["passed": error == nil, "error": error ?? "",
+            "openingGeometry": openingGeometry,
+            "opens": opens, "closes": closes, "interactive": interactive,
             "refreshes": measuredFrames.count, "distinctButtonFrames": buttonFrames.count,
             "distinctPopoverFrames": Set(measuredFrames).count, "frame": NSStringFromRect(initialFrame)]
         if CommandLine.arguments.count > 1,

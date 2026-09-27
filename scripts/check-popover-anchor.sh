@@ -7,6 +7,7 @@ mkdir -p "$PSK_CHECK_APP/Contents/MacOS" .build/ModuleCache
 xcrun swiftc -module-cache-path "$PWD/.build/ModuleCache" \
     -target arm64-apple-macosx13.0 \
     App/Counter/Support/GraphPopoverAnchor.swift \
+    App/Counter/Support/GraphPopoverDismissal.swift \
     App/Counter/Support/GraphPopoverPlacement.swift \
     App/Counter/Support/StatusCountImage.swift \
     Tests/PSKReporterWindowTests/PopoverAnchorCheck.swift \
@@ -22,7 +23,7 @@ app = pathlib.Path(sys.argv[1])
 pathlib.Path(sys.argv[2]).unlink(missing_ok=True)
 PY
 codesign --force --sign - "$PSK_CHECK_APP"
-open -n -W "$PSK_CHECK_APP" --args "$PSK_CHECK_RESULT"
+open -n -W "$PSK_CHECK_APP" --args "$PSK_CHECK_RESULT" "$@"
 python3 - "$PSK_CHECK_RESULT" <<'PY'
 import json, pathlib, sys
 result = json.loads(pathlib.Path(sys.argv[1]).read_text())
