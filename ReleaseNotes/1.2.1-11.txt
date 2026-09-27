@@ -1,0 +1,3 @@
+Build 1.2.1 (11) keeps the graph pane in the position selected when it opens.
+
+Leave the graphs open for at least a minute while reports arrive. Confirm that the pane stays vertically still while the graphs update. Close and reopen it to confirm that it remains below the menu bar. Check that the count and both graphs continue updating normally.

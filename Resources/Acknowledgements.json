@@ -1,0 +1,63 @@
+{
+  "components": [
+    {
+      "id": "app",
+      "title": "PSK Reporter Counter",
+      "licence": "MIT License",
+      "credit": "Copyright (c) 2026 Nathan Tallack (ZL2NU)",
+      "summary": "The original app source and documentation are released under the MIT License. Third-party components retain their own licences.",
+      "files": ["LICENSE.txt"]
+    },
+    {
+      "id": "cocoamqtt",
+      "title": "CocoaMQTT 2.4.1",
+      "licence": "Eclipse Distribution License 1.0",
+      "credit": "emqx.io and CocoaMQTT contributors",
+      "summary": "MQTT client. The EDL 1.0 option is used from the project's EPL 1.0 / EDL 1.0 dual licence. Both licence texts and the original copyright notices are included below.",
+      "url": "https://github.com/emqx/CocoaMQTT/tree/2.4.1",
+      "packageIdentity": "cocoamqtt",
+      "version": "2.4.1",
+      "files": ["ThirdPartyLicences/CocoaMQTT-NOTICES.txt", "ThirdPartyLicences/CocoaMQTT-LICENSE.txt", "ThirdPartyLicences/CocoaMQTT-EDL-1.0.txt", "ThirdPartyLicences/CocoaMQTT-EPL-1.0.txt"]
+    },
+    {
+      "id": "mqttcocoaasyncsocket",
+      "title": "MqttCocoaAsyncSocket 1.0.8",
+      "licence": "BSD licence option",
+      "credit": "Copyright (c) 2017 Deusty, LLC. All rights reserved.",
+      "summary": "Asynchronous socket transport, based on CocoaAsyncSocket by Dustin Voss, Robbie Hanson, Deusty LLC and the Apple development community. The BSD option in the upstream licence is used.",
+      "url": "https://github.com/leeway1208/MqttCocoaAsyncSocket/tree/1.0.8",
+      "packageIdentity": "mqttcocoaasyncsocket",
+      "version": "1.0.8",
+      "files": ["ThirdPartyLicences/MqttCocoaAsyncSocket-LICENSE.txt"]
+    },
+    {
+      "id": "starscream",
+      "title": "Starscream 4.0.8",
+      "licence": "Apache License 2.0",
+      "credit": "Copyright (c) 2014-2023 Dalton Cherry.",
+      "summary": "Optional WebSocket dependency resolved with CocoaMQTT. Its licence notice is retained for completeness. The app uses CocoaMQTT's socket transport.",
+      "url": "https://github.com/daltoniam/Starscream/tree/4.0.8",
+      "packageIdentity": "starscream",
+      "version": "4.0.8",
+      "files": ["ThirdPartyLicences/Starscream-LICENSE.txt"]
+    },
+    {
+      "id": "swift",
+      "title": "Swift",
+      "licence": "Apache License 2.0 with Runtime Library Exception",
+      "credit": "Apple Inc. and the Swift project contributors",
+      "summary": "Swift language and runtime acknowledgement. The complete licence and Runtime Library Exception are included below.",
+      "url": "https://www.swift.org/about/",
+      "files": ["ThirdPartyLicences/Swift-LICENSE.txt"]
+    },
+    {
+      "id": "apple",
+      "title": "Apple macOS frameworks",
+      "licence": "Apple software terms",
+      "credit": "Apple Inc. and the respective rights holders",
+      "summary": "AppKit, SwiftUI, Swift Charts and the other system frameworks listed below are supplied by macOS and retain their respective terms.",
+      "url": "https://www.apple.com/legal/sla/",
+      "files": ["ThirdPartyLicences/Apple-Frameworks.txt"]
+    }
+  ]
+}

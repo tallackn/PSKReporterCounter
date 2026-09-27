@@ -1,0 +1,21 @@
+CocoaMQTT 2.4.1
+https://github.com/emqx/CocoaMQTT/tree/2.4.1
+
+PSK Reporter Counter uses CocoaMQTT under the Eclipse Distribution License
+1.0 option offered by its top-level LICENSE file. The upstream dual-licence
+declaration and both licence texts are supplied with this application.
+
+Copyright notices retained from the upstream source files:
+
+Copyright (c) 2015 emqx.io. All rights reserved.
+Copyright © 2015年 emqx.io. All rights reserved.
+Copyright © 2019 emqx.io. All rights reserved.
+Copyright © 2019 emqtt.io. All rights reserved.
+Copyright © 2022. All rights reserved.
+
+CocoaMQTT contributors include Feng Lee, CrazyWisdom, Alex Yu and Leeway,
+as credited in the upstream package metadata.
+
+The edl-v10 file in the upstream 2.4.1 release is empty. The complete EDL 1.0
+text is included from the Eclipse Foundation's canonical publication:
+https://www.eclipse.org/org/documents/edl-v10/EDL-1.0.txt

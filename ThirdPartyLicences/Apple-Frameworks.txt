@@ -1,0 +1,18 @@
+Apple macOS frameworks
+
+This application uses AppKit, SwiftUI, Swift Charts, Foundation, Combine,
+CoreFoundation, CoreGraphics, CoreText, CFNetwork, Security,
+ServiceManagement, OSLog and Dispatch, together with system runtime libraries.
+
+These frameworks and system libraries are supplied by macOS. Copyright and
+licence terms remain with Apple Inc. and the respective rights holders.
+They are not relicensed under PSK Reporter Counter's MIT licence.
+
+Apple software licence agreements:
+https://www.apple.com/legal/sla/
+
+Apple, macOS, App Store and Swift are trademarks of Apple Inc.
+
+The Swift open-source project is separately acknowledged under the Apache
+License 2.0 with the Runtime Library Exception. Its licence text is included
+in Swift-LICENSE.txt.

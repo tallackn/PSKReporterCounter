@@ -1,0 +1,5 @@
+Build 1.2.1 (12) adds a Source code on GitHub link to About and fixes horizontal movement of the live graph pane.
+
+Right-click the menu bar counter, choose About PSK Reporter Counter, and select Source code on GitHub. It should open https://github.com/tallackn/PSKReporterCounter in your default browser.
+
+Leave the graph pane open while the count updates, including changes in its number of digits. The pane should keep the same horizontal and vertical position. Clicking outside, pressing Escape or clicking the counter again should close it. Reopening should anchor it to the counter's current location.
