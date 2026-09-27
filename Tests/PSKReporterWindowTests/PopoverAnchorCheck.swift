@@ -40,7 +40,7 @@ private final class AnchorCheck: NSObject, NSApplicationDelegate, NSPopoverDeleg
         item.button?.image = StatusCountImage.make("0")
         item.button?.target = self
         item.button?.action = #selector(clicked)
-        item.button?.sendAction(on: [.leftMouseUp, .rightMouseUp])
+        item.button?.sendAction(on: [.leftMouseDown, .rightMouseDown])
         item.button?.setAccessibilityLabel("Graph interaction check")
         popover.delegate = self
         // Wait for the status bar host to lay out this newly created item.
@@ -48,7 +48,7 @@ private final class AnchorCheck: NSObject, NSApplicationDelegate, NSPopoverDeleg
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [self] in openPopover() }
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + (interactive ? 240 : 20)) { [self] in
-            finish(error: "The native check did not finish within 20 seconds.")
+            finish(error: "The native check timed out.")
         }
     }
 
@@ -103,7 +103,7 @@ private final class AnchorCheck: NSObject, NSApplicationDelegate, NSPopoverDeleg
     }
 
     @objc private func clicked() {
-        if NSApp.currentEvent?.type == .rightMouseUp || NSApp.currentEvent?.modifierFlags.contains(.control) == true {
+        if NSApp.currentEvent?.type == .rightMouseDown || NSApp.currentEvent?.modifierFlags.contains(.control) == true {
             popover.close()
             guard let button = item.button, let window = button.window, let screen = window.screen else { return }
             let rect = window.convertToScreen(button.convert(button.bounds, to: nil))

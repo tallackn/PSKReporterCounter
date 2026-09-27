@@ -13,8 +13,10 @@ enum GraphPopoverPlacement {
     }
 
     static func menuOrigin(button: CGRect, visibleScreen: CGRect, rightToLeft: Bool) -> CGPoint {
+        // NSMenu positions its content frame; the rounded outer edge extends
+        // above that point. Allow six points to match native status menus.
         CGPoint(x: rightToLeft ? button.maxX : button.minX,
-                y: min(button.minY, visibleScreen.maxY))
+                y: min(button.minY, visibleScreen.maxY) - 6)
     }
 
     static func contentSize(in available: CGRect) -> CGSize {

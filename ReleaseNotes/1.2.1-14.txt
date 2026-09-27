@@ -1,0 +1,7 @@
+Build 1.2.1 (14) lowers the right-click menu by six points and corrects the close-and-reopen sequence when clicking the counter with its graphs open.
+
+Right-click the counter. The menu should sit at the same height below the menu bar as other native status menus.
+
+Left-click the counter to open the graphs, then left-click again. The graph should close and stay closed after you release the mouse button. Repeat a few times. Opening now responds when the mouse button is pressed. Also check Control-click, outside-click dismissal and Escape.
+
+Leave the graphs open while the live count updates. Their fixed position and live updates should be retained.

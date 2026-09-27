@@ -1,13 +1,15 @@
 import AppKit
+import OSLog
 
 /// Own dismissal while the popover is open. A transient popover can close on
 /// mouse-down before the status button's mouse-up action, reopening on the same
-/// click. Leave clicks on that button to its action so it can toggle reliably.
+/// click. Leave clicks on that button to its mouse-down action.
 @MainActor
 final class GraphPopoverDismissal {
     private var localMonitor: Any?
     private var globalMonitor: Any?
     private var deactivationObserver: NSObjectProtocol?
+    private let logger = Logger(subsystem: "com.tallackn.PSKReporterCounter", category: "MenuBar")
 
     func start(popover: NSPopover, button: NSStatusBarButton) {
         stop()
@@ -32,8 +34,17 @@ final class GraphPopoverDismissal {
         }
         deactivationObserver = NotificationCenter.default.addObserver(
             forName: NSApplication.didResignActiveNotification, object: NSApp, queue: .main
-        ) { [weak popover] _ in
-            MainActor.assumeIsolated { popover?.close() }
+        ) { [weak self, weak popover, weak button] _ in
+            MainActor.assumeIsolated {
+                // Clicking a status item can deactivate the app before its
+                // button action arrives. Let that action close the pane once.
+                if NSEvent.pressedMouseButtons != 0 && Self.contains(NSEvent.mouseLocation, button: button) {
+                    self?.logger.info("Deactivation during status button press; retaining graphs for the button action")
+                    return
+                }
+                self?.logger.info("Closing graphs after application deactivation")
+                popover?.close()
+            }
         }
     }
 

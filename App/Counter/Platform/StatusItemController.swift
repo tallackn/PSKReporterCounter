@@ -37,7 +37,9 @@ final class StatusItemController: NSObject, NSPopoverDelegate {
             button.alignment = .center
             button.target = self
             button.action = #selector(clicked)
-            button.sendAction(on: [.leftMouseUp, .rightMouseUp])
+            // Resolve each physical click on mouse-down. A later mouse-up must
+            // not reopen a pane dismissed while the menu bar takes focus.
+            button.sendAction(on: [.leftMouseDown, .rightMouseDown])
             button.setAccessibilityHelp("Left-click for live graphs. Right-click for Settings, About, Help and other commands.")
         }
         observation = monitor.objectWillChange.sink { [weak self] _ in
@@ -46,7 +48,7 @@ final class StatusItemController: NSObject, NSPopoverDelegate {
         updateDisplay()
     }
 
-    func closeGraphs() { popover.performClose(nil) }
+    func closeGraphs() { popover.close() }
 
     func showGraphs() {
         guard !popover.isShown, let button = statusItem.button,
@@ -102,7 +104,8 @@ final class StatusItemController: NSObject, NSPopoverDelegate {
         guard let button = statusItem.button, let window = button.window,
               let screen = window.screen else { return }
         let event = NSApp.currentEvent
-        if event?.type == .rightMouseUp || event?.modifierFlags.contains(.control) == true {
+        logger.info("Status button action; event=\(String(describing: event?.type), privacy: .public); graphsVisible=\(self.popover.isShown, privacy: .public)")
+        if event?.type == .rightMouseDown || event?.modifierFlags.contains(.control) == true {
             closeGraphs()
             rebuildMenu()
             menu.update()

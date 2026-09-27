@@ -23,7 +23,7 @@ enum PopoverPlacementCheck {
                 for rightToLeft in [false, true] {
                     let origin = GraphPopoverPlacement.menuOrigin(button: anchor, visibleScreen: screen,
                                                                   rightToLeft: rightToLeft)
-                    precondition(origin.y == anchor.minY, "Menu must start below the status button")
+                    precondition(origin.y == anchor.minY - 6, "Menu must include clearance for its rounded outer edge")
                     precondition(origin.x == (rightToLeft ? anchor.maxX : anchor.minX))
                 }
                 let content = GraphPopoverPlacement.contentSize(in: available)

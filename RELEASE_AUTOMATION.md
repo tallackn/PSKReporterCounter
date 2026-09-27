@@ -24,7 +24,7 @@ The small native transport uses Apple's CryptoKit to sign a token valid for ten 
 4. Run from the clean checkout at that published revision:
 
 ```sh
-bash scripts/release-testflight.sh --notes-file ReleaseNotes/1.2.1-13.txt
+bash scripts/release-testflight.sh --notes-file ReleaseNotes/1.2.1-14.txt
 ```
 
 The command verifies API access and the destination, refuses an existing build number, checks the published source, runs release-tool tests, core tests and popover checks, archives, verifies the archive, preserves a versioned archive and source hashes, uploads, waits for Apple processing, saves the English (U.K.) test notes and assigns the build to Baseline UX. The native anchor check briefly opens its own test pane, varies a temporary status item's width across 50 refreshes and checks that the pane meets the menu bar without added top clearance and remains still. An optional --interactive run checks left-click toggling, right-click placement, outside-click dismissal and Escape. It requires an interactive macOS desktop and closes its own window afterwards. The release tool reads the saved notes, group membership and internal testing state back before reporting success.
@@ -43,8 +43,8 @@ If processing or TestFlight setup is interrupted after a successful upload, repe
 
 ```sh
 python3 scripts/app_store_connect.py check
-python3 scripts/app_store_connect.py status --version 1.2.1 --build 13
-bash scripts/release-testflight.sh --resume --notes-file ReleaseNotes/1.2.1-13.txt
+python3 scripts/app_store_connect.py status --version 1.2.1 --build 14
+bash scripts/release-testflight.sh --resume --notes-file ReleaseNotes/1.2.1-14.txt
 ```
 
 Install updates through the Mac's TestFlight app. Record Nathan's installed-build UX result in VERIFICATION.md. App Review and public release remain separate authorised actions. The automation has no review-submission or public-release command.
