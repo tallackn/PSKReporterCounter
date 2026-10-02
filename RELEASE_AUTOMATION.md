@@ -1,5 +1,7 @@
 # TestFlight release automation
 
+Version 2.0 (15) is the [accepted public baseline](ReleaseNotes/2.0-baseline.md). Read the [maintenance guide](MAINTENANCE.md) for authority, workflow and verification requirements. Commands below that name 2.0 (15) are historical examples, not instructions to upload that build again. For a future authorised release, substitute its new version, unused build number and matching notes file. Warn Nathan before the release command's visible native anchor check.
+
 The local release command uses Xcode for the archive and upload, and Apple's App Store Connect API for processing status, test notes and internal distribution. It targets PSK Reporter Counter, app 6816545854, bundle com.tallackn.PSKReporterCounter and the existing Baseline UX group.
 
 ## Credentials

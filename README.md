@@ -2,6 +2,8 @@
 
 A native macOS menu bar app written in Swift, using AppKit, SwiftUI, Swift Charts and CocoaMQTT. Version 2.0 targets Apple silicon and macOS 13 or later.
 
+For future development and releases, read the [maintenance guide](MAINTENANCE.md) and [accepted version 2.0 baseline](ReleaseNotes/2.0-baseline.md). This README covers local build, installation and operation.
+
 ## Build and install locally
 
 Requires an Apple silicon Mac running macOS 13 or later, and Xcode or the Apple Command Line Tools with a compatible Swift toolchain and macOS SDK. The current build is verified with Swift 6.4 and the macOS 27 SDK.
